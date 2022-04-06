@@ -95,3 +95,57 @@ JOIN customers c
 ON i.CustomerId = c.CustomerId
 
 GROUP BY c.FirstName;
+
+
+ /* invoice tablosundaki faturaların her birinin müşteri adını 
+(FirstName),soyadını(lastName) ve fatura meblağlarının 
+toplamının(total) 40 dolardan fazla olanlarını artan sırada
+listeleyen sorguyu yazınız */
+
+SELECT c.FirstName, c.LastName, sum(i.total) 
+
+FROM invoices i
+
+JOIN customers c
+
+ON i.CustomerId = c.CustomerId
+
+GROUP BY c.FirstName
+
+HAVING sum(i.total) > 40
+
+ORDER  BY sum(i.total) DESC;
+
+
+/* w/ HAVING (aggregiate function lı bölüm  where içinde kul zaman "HAVING"
+kul. Yeri GROUP BY'dan sonradır.  */
+
+SELECT c.FirstName, c.LastName, sum(i.total) as total_amount
+
+FROM invoices i
+
+JOIN customers c
+
+ON i.CustomerId = c.CustomerId
+
+GROUP BY c.FirstName
+
+HAVING total_amount > 40
+
+ORDER  BY total_amount DESC;
+
+/* As a alternative GROUP BY  i.CustomerId */
+
+SELECT c.FirstName, c.LastName, sum(i.total) as total_amount
+
+FROM invoices i
+
+JOIN customers c
+
+ON i.CustomerId = c.CustomerId
+
+GROUP BY i.CustomerId
+
+HAVING total_amount > 40
+
+ORDER  BY total_amount DESC;
